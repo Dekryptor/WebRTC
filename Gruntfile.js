@@ -7,12 +7,12 @@ module.exports = function(grunt) {
             },
             my_target: {
                 files: {
-                    "./public/app/app.min.js": [
-                        "./public/app/app.module.js",
-                        "./public/app/app.routes.js",
-                        "./public/app/app.controller.js",
-                        "./public/app/components/*/controller.js",
-                        "./public/app/services/*/service.js"
+                    "./js/app.min.js": [
+                        "./js/app.module.js",
+                        "./js/app.routes.js",
+                        "./js/app.controller.js",
+                        "./js/components/*/controller.js",
+                        "./js/services/*/service.js"
                     ]
                 }
             }
@@ -23,7 +23,7 @@ module.exports = function(grunt) {
                     style: "compressed"
                 },
                 files: {
-                    "./public/css/style.css": "./public/css/style.scss"
+                    "./css/style.css": "./css/style.scss"
                 }
             }
         }
