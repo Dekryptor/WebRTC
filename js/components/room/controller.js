@@ -10,8 +10,6 @@ lamkRTC.controller("roomController", function ($rootScope, $scope, $routeParams,
         remoteVideosEl: '',
         // immediately ask for camera access
         autoRequestMedia: true,
-        // signaling server
-        url: "https://hieudoan.com:9999",
         debug: false,
         detectSpeakingEvents: true,
         autoAdjustMic: false
