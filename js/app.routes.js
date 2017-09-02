@@ -1,6 +1,5 @@
 'use strict';
 
-//var lockStat = false;
 app.config(function($routeProvider) {
     $routeProvider.when('/', {
         templateUrl: 'js/controllers/home/view.html',

@@ -24,6 +24,7 @@
   "homepage": "https://github.com/HieuDoan0412/WebRTC#readme",
   "devDependencies": {
     "@types/angular": "^1.6.32",
+    "@types/angular-route": "^1.3.4",
     "@types/jquery": "^3.2.12",
     "connect": "^3.6.3",
     "grunt": "^1.0.1",

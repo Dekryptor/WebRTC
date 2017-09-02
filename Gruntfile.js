@@ -10,9 +10,9 @@ module.exports = function(grunt) {
                     "./js/app.min.js": [
                         "./js/app.module.js",
                         "./js/app.routes.js",
-                        "./js/app.controller.js",
-                        "./js/controllers/*/controller.js",
-                        "./js/services/*/service.js"
+                        "./js/services/*/service.js",
+                        "./js/directives/*/directive.js",
+                        "./js/controllers/*/controller.js"
                     ]
                 }
             }
