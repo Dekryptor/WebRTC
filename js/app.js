@@ -57,7 +57,14 @@ var Noti = (function () {
 }());
 var ClickCopy = (function () {
     function ClickCopy(ngCopy) {
-        this.ngCopy = ngCopy;
+        return {
+            restrict: 'A',
+            link: function (scope, element, attrs) {
+                element.bind('click', function (e) {
+                    ngCopy.CopyToClipBoard(attrs.ngClickCopy);
+                });
+            }
+        };
     }
     ClickCopy.$inject = ["ngCopy"];
     return ClickCopy;
@@ -66,9 +73,9 @@ var HomeController = (function () {
     function HomeController($scope, $location) {
         this.$scope = $scope;
         this.$location = $location;
-        this.$scope.hostname = this.$location.absUrl();
-        this.$scope.createRoom = function () {
-            this.$location.path("/" + this.$scope.roomName);
+        $scope.hostname = $location.absUrl();
+        $scope.createRoom = function () {
+            $location.path("/" + $scope.roomName);
         };
     }
     HomeController.$inject = ["$scope", "$location"];

@@ -5,9 +5,7 @@
   "main": "server.js",
   "scripts": {
     "grunt": "grunt",
-    "start": "node server.js",
-    "postinstall": "bower install",
-    "test": "karma start karma.conf.js"
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",

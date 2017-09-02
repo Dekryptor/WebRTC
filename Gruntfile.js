@@ -7,13 +7,7 @@ module.exports = function(grunt) {
             },
             my_target: {
                 files: {
-                    "./js/app.min.js": [
-                        "./js/app.module.js",
-                        "./js/app.routes.js",
-                        "./js/services/*/service.js",
-                        "./js/directives/*/directive.js",
-                        "./js/controllers/*/controller.js"
-                    ]
+                    "./js/app.min.js": ["./js/app.js"]
                 }
             }
         },
