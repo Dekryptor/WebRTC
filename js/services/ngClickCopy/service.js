@@ -1,5 +1,5 @@
 'use strict';
-angular.module('ngClickCopy', []).service('ngCopy', ['$window', function($window) {
+app.service('ngCopy', ['$window', function($window) {
     var body = angular.element($window.document.body);
     var textarea = angular.element('<textarea/>');
     textarea.css({

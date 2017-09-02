@@ -1,12 +1,12 @@
 'use strict';
 
 //var lockStat = false;
-lamkRTC.config(function($routeProvider) {
+app.config(function($routeProvider) {
     $routeProvider.when('/', {
-        templateUrl: 'js/components/home/view.html',
+        templateUrl: 'js/controllers/home/view.html',
         controller: 'homeController'
     }).when('/:roomName', {
-        templateUrl: 'js/components/room/view.html',
+        templateUrl: 'js/controllers/room/view.html',
         controller: 'roomController'
     });
 });

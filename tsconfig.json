@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "module": "system",
+    "noImplicitAny": true,
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "outFile": "js/app.js",
+    "sourceMap": true,
+    "lib" : ["es2015", "es2015.iterable", "dom"]
+  },
+  "include": [
+    "js/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/*.spec.ts"
+  ]
+}

@@ -1,5 +1,5 @@
 'use strict';
 
-lamkRTC.controller("controller", function ($scope) {
+app.controller("controller", function ($scope) {
 
 });

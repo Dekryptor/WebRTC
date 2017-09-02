@@ -1,3 +1,3 @@
 'use strict';
 
-var lamkRTC = angular.module("app", ["ngRoute", "ngClickCopy"]);
+var app = angular.module("app", ["ngRoute"]);

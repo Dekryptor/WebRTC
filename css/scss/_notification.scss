@@ -19,24 +19,24 @@
     padding: 10px;
     font-size: 14px;
     line-height: 15px;
-    color: #fff;
+    color: #ffffff;
 
     @include border-radius(10px);
 
-    &.blue {
-        background-color: #4285f4;
+    &.red {
+        background-color: $red;
     }
 
-    &.red {
-        background-color: #ea4335;
+    &.blue {
+        background-color: $blue;
     }
 
     &.green {
-        background-color: #34a853;
+        background-color: $green;
     }
 
     &.yellow {
-        background-color: #fbbc05;
+        background-color: $yellow;
     }
 
     &.show {

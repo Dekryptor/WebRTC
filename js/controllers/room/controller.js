@@ -1,4 +1,4 @@
-lamkRTC.controller("roomController", function ($rootScope, $scope, $routeParams, $location) {
+app.controller("roomController", ["$rootScope", "$scope", "$routeParams", "$location", "ngNoti", function ($rootScope, $scope, $routeParams, $location, ngNoti) {
     // grab the room from the URL
     var room = $routeParams.roomName;
 
@@ -54,7 +54,7 @@ lamkRTC.controller("roomController", function ($rootScope, $scope, $routeParams,
     webrtc.on('videoAdded', function (video, peer) {
         console.log('video added', peer);
         var from = typeof peer.nick != "undefined" ? peer.nick : peer.id;
-        notification("videoAdded",from);
+        ngNoti.notification("videoAdded",from);
         var remotes = document.getElementById('remotes');
         if (remotes) {
             var container = document.createElement('div');
@@ -99,7 +99,7 @@ lamkRTC.controller("roomController", function ($rootScope, $scope, $routeParams,
     webrtc.on('videoRemoved', function (video, peer) {
         console.log('video removed ', peer);
         var from = typeof peer.nick != "undefined" ? peer.nick : peer.id;
-        notification("videoRemoved",from);
+        ngNoti.notification("videoRemoved",from);
         var remotes = document.getElementById('remotes');
         var el = document.getElementById(peer ? 'container_' + webrtc.getDomId(peer) : 'localScreenContainer');
         if (remotes && el) {
@@ -184,7 +184,7 @@ lamkRTC.controller("roomController", function ($rootScope, $scope, $routeParams,
 
         } else if (data.type === 'nick') {
             var from = typeof peer.nick != "undefined" ? peer.nick : peer.id;
-            notification("changeName", from, data.payload);
+            ngNoti.notification("changeName", from, data.payload);
             peer.nick = data.payload;
         } else if (data.type === 'lockStatus') {
             if (data.payload == 'true') {
@@ -263,26 +263,4 @@ lamkRTC.controller("roomController", function ($rootScope, $scope, $routeParams,
         $('#conversation').append("<p class='file'>You just send a file named '" + file.name + "'</p><a href='" + URL.createObjectURL(file) + "' download='" + file.name + "'>Download</a>");
         $(".mes.active").removeClass("active");
     });
-
-    //Lock room
-/*
-    $("button[name='lock']").click(function ($rootScope) {
-        var lockStat = "";
-        if ($("button[name='lock'] i").hasClass("fa-unlock")) {
-            //$scope.update("true");
-            $scope.update({
-                roomName: room,
-                roomStatus: true
-            });
-        } else {
-            //$scope.update("false");
-            $scope.update({
-                roomName: room,
-                roomStatus: false
-            });
-        }
-        console.log($scope.roomStatus() );
-        $("button[name='lock'] i").toggleClass("fa-lock").toggleClass("fa-unlock");
-        webrtc.sendDirectlyToAll(room, 'lockStatus', $scope.roomStatus());
-    });*/
-});
+}]);
