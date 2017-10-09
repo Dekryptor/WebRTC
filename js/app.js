@@ -73,11 +73,11 @@ var HomeController = (function () {
     function HomeController($scope, $location) {
         this.$scope = $scope;
         this.$location = $location;
-        $scope.hostname = $location.absUrl();
-        $scope.createRoom = function () {
-            $location.path("/" + $scope.roomName);
-        };
+        this.hostName = this.$location.absUrl();
     }
+    HomeController.prototype.createRoom = function () {
+        this.$location.path("/" + this.roomName);
+    };
     HomeController.$inject = ["$scope", "$location"];
     return HomeController;
 }());
@@ -88,7 +88,7 @@ var RoomController = (function () {
         this.$routeParams = $routeParams;
         this.$location = $location;
         this.ngNoti = ngNoti;
-        var room = $routeParams.roomName;
+        this.room = $routeParams.roomName;
         var webrtc = new SimpleWebRTC({
             localVideoEl: 'localVideo',
             remoteVideosEl: '',
@@ -98,8 +98,8 @@ var RoomController = (function () {
             autoAdjustMic: false
         });
         webrtc.on('readyToCall', function () {
-            if (room) {
-                webrtc.joinRoom(room);
+            if (this.room) {
+                webrtc.joinRoom(this.room);
             }
         });
         webrtc.on('localStream', function (stream) {
@@ -143,8 +143,8 @@ var RoomController = (function () {
                             case 'connected':
                             case 'completed':
                                 connstate_1.innerText = 'Connection established.';
-                                if ($scope.nick != "Input your username") {
-                                    webrtc.sendDirectlyToAll(room, 'nick', $scope.nick);
+                                if (this.nick != "Input your username") {
+                                    webrtc.sendDirectlyToAll(this.room, 'nick', this.nick);
                                 }
                                 break;
                             case 'disconnected':
@@ -177,7 +177,6 @@ var RoomController = (function () {
             console.log('local fail', connstate);
             if (connstate) {
                 connstate.innerText = 'Connection failed.';
-                fileinput.disabled = 'disabled';
             }
         });
         webrtc.on('connectivityError', function (peer) {
@@ -185,14 +184,12 @@ var RoomController = (function () {
             console.log('remote fail', connstate);
             if (connstate) {
                 connstate.innerText = 'Connection failed.';
-                fileinput.disabled = 'disabled';
             }
         });
-        $scope.url = $location.$$absUrl;
+        this.url = $location.$$absUrl;
         $scope.sendMessage = function () {
             var id = $(".mes.active").attr("id");
-            console.log();
-            webrtc.sendDirectlyToAll(room, 'chat', $scope.message);
+            webrtc.sendDirectlyToAll(this.room, 'chat', this.message);
             if (id != "me") {
                 $(".mes.active").removeClass("active");
                 $('#conversation').append("<div id='me' class='mes me active'>" +
@@ -200,26 +197,26 @@ var RoomController = (function () {
                     "<p class='content'></p>" +
                     "</div>");
             }
-            $(".mes.active .content").append($scope.message + "<br>");
-            $scope.message = "";
+            $(".mes.active .content").append(this.message + "<br>");
+            this.message = "";
         };
-        $scope.nick = "Input your username";
-        $scope.editing = false;
+        this.nick = "Input your username";
+        this.editing = false;
+        $scope.doneEditing = function () {
+            this.editing = false;
+            if (this.nick != "Input your username" && this.nick != "") {
+                webrtc.sendDirectlyToAll(this.room, 'nick', this.nick);
+            }
+            else if (this.nick == "") {
+                this.nick = "Input your username";
+            }
+        };
         $scope.setNick = function () {
-            webrtc.sendDirectlyToAll(room, 'nick', $scope.nick);
+            webrtc.sendDirectlyToAll(this.room, 'nick', this.nick);
         };
         $scope.editItem = function () {
-            $scope.editing = true;
-            $scope.nick = "";
-        };
-        $scope.doneEditing = function () {
-            $scope.editing = false;
-            if ($scope.nick != "Input your username" && $scope.nick != "") {
-                webrtc.sendDirectlyToAll(room, 'nick', $scope.nick);
-            }
-            else if ($scope.nick == "") {
-                $scope.nick = "Input your username";
-            }
+            this.editing = true;
+            this.nick = "";
         };
         webrtc.on('channelMessage', function (peer, label, data) {
             if (data.type === 'chat') {
@@ -251,12 +248,6 @@ var RoomController = (function () {
                 }
             }
         });
-        $scope.leave = function () {
-            webrtc.stopLocalVideo();
-            webrtc.leaveRoom();
-            webrtc.disconnect();
-            $location.path('/');
-        };
         var peers = [];
         webrtc.on('createdPeer', function (peer) {
             console.log('createdPeer', peer);
@@ -330,14 +321,11 @@ var Config = (function () {
     Config.$inject = ["$routeProvider"];
     return Config;
 }());
-var webrtc;
-(function (webrtc) {
-    var app = angular.module('app', ['ngRoute'])
-        .config(Config)
-        .service('ngNoti', Noti)
-        .service('ngCopy', Copy)
-        .directive('ngClickCopy', ClickCopy)
-        .controller('homeController', HomeController)
-        .controller('roomController', RoomController);
-})(webrtc || (webrtc = {}));
+var app = angular.module('app', ['ngRoute'])
+    .config(Config)
+    .service('ngNoti', Noti)
+    .service('ngCopy', Copy)
+    .directive('ngClickCopy', ClickCopy)
+    .controller('homeController', HomeController)
+    .controller('roomController', RoomController);
 //# sourceMappingURL=app.js.map

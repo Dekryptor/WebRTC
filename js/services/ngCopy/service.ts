@@ -3,7 +3,7 @@
 class Copy {
   public CopyToClipBoard(toCopy: string): void {
     let body = angular.element(document.body);
-    let textarea = angular.element('<textarea/>');
+    let textarea: any = angular.element('<textarea/>');
     textarea.css({
       position: 'fixed',
       opacity: '0'
