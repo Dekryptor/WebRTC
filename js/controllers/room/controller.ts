@@ -2,16 +2,16 @@
 
 class RoomController {
   static $inject = ["$rootScope", "$scope", "$routeParams", "$location", "ngNoti"];
-
+  /*
   public editing: boolean;
   public message: string;
   public room: string;
   public nick: string;
   public url: string;
-
+  */
   constructor(private $rootScope: any, private $scope: any, private $routeParams: any, private $location: any, private ngNoti: any) {
     // grab the room from the URL
-    this.room = $routeParams.roomName;
+    $scope.room = $routeParams.roomName;
 
     // create our webrtc connection
     let webrtc = new SimpleWebRTC({
@@ -29,8 +29,8 @@ class RoomController {
     // when it's ready, join if we got a room from the URL
     webrtc.on('readyToCall', function() {
       // if already got a room, then join it
-      if (this.room) {
-        webrtc.joinRoom(this.room);
+      if ($scope.room) {
+        webrtc.joinRoom($scope.room);
       }
     });
 
@@ -85,8 +85,8 @@ class RoomController {
               case 'connected':
               case 'completed': // on caller side
                 connstate.innerText = 'Connection established.';
-                if (this.nick != "Input your username") {
-                  webrtc.sendDirectlyToAll(this.room, 'nick', this.nick);
+                if ($scope.nick != "Input your username") {
+                  webrtc.sendDirectlyToAll($scope.room, 'nick', $scope.nick);
                 }
                 break;
               case 'disconnected':
@@ -137,12 +137,12 @@ class RoomController {
     });
 
     //Copy Link to clip board
-    this.url = $location.$$absUrl;
+    $scope.url = $location.$$absUrl;
 
     //Send chat
     $scope.sendMessage = function() {
       let id = $(".mes.active").attr("id");
-      webrtc.sendDirectlyToAll(this.room, 'chat', this.message);
+      webrtc.sendDirectlyToAll($scope.room, 'chat', $scope.message);
       if (id != "me") {
         $(".mes.active").removeClass("active");
         $('#conversation').append("<div id='me' class='mes me active'>" +
@@ -150,30 +150,30 @@ class RoomController {
           "<p class='content'></p>" +
           "</div>");
       }
-      $(".mes.active .content").append(this.message + "<br>");
-      this.message = "";
+      $(".mes.active .content").append($scope.message + "<br>");
+      $scope.message = "";
     };
 
     //Set Nickname
-    this.nick = "Input your username";
-    this.editing = false;
+    $scope.nick = "Input your username";
+    $scope.editing = false;
 
     $scope.doneEditing = function() {
-      this.editing = false;
-      if (this.nick != "Input your username" && this.nick != "") {
-        webrtc.sendDirectlyToAll(this.room, 'nick', this.nick);
-      } else if (this.nick == "") {
-        this.nick = "Input your username";
+      $scope.editing = false;
+      if ($scope.nick != "Input your username" && $scope.nick != "") {
+        webrtc.sendDirectlyToAll($scope.room, 'nick', $scope.nick);
+      } else if ($scope.nick == "") {
+        $scope.nick = "Input your username";
       }
     };
 
     $scope.setNick = function() {
-      webrtc.sendDirectlyToAll(this.room, 'nick', this.nick);
+      webrtc.sendDirectlyToAll($scope.room, 'nick', $scope.nick);
     }
 
     $scope.editItem = function() {
-      this.editing = true;
-      this.nick = "";
+      $scope.editing = true;
+      $scope.nick = "";
     }
 
     //Receiving chat type + nick type

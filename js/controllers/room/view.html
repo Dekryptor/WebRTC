@@ -1,4 +1,4 @@
-<main class="row" ng-controller="roomController as ctrl">
+<main class="row">
     <div id="notification" class="notification"></div>
     <div class="container-fluid">
         <div class="row">
@@ -9,12 +9,12 @@
                             <img src="img/webrtc.png" alt="WebRTC" />
                         </div>
                         <div class="col-sm-6 form-group">
-                            <button type="button" name="invite" class="btn btn-primary form-control" ng-click-copy="{{ ctrl.url }}">
+                            <button type="button" name="invite" class="btn btn-primary form-control" ng-click-copy="{{ url }}">
                                 <i class="fa fa-chain"></i> Invite
                             </button>
                         </div>
                         <div class="col-sm-6 form-group">
-                            <button type="button" name="leave" class="btn btn-danger form-control" ng-click="ctrl.leave()">
+                            <button type="button" name="leave" class="btn btn-danger form-control" ng-click="leave()">
                                 <i class="fa fa-sign-out"></i> Leave
                             </button>
                         </div>
@@ -23,8 +23,8 @@
                             <div id="nick-container" class="col-inner">
                                 <div class="form-group text-center">
                                     <p>Double-click to change username<br />Click elsewhere to set username</p>
-                                    <span ng-hide="ctrl.editing" ng-dblclick="ctrl.editItem()">{{ ctrl.nick }}</span>
-                                    <input ng-show="ctrl.editing" type="text" ng-model="ctrl.nick" ng-blur="ctrl.doneEditing()" class="form-control text-center" autofocus>
+                                    <span ng-hide="editing" ng-dblclick="editItem()">{{ nick }}</span>
+                                    <input ng-show="editing" type="text" ng-model="nick" ng-blur="doneEditing()" class="form-control text-center" autofocus>
                                 </div>
                             </div>
                             <div class="local-video">
@@ -57,8 +57,8 @@
                 <div class="chat-container">
                     <h3><i class="fa fa-comment"></i> Chat</h3>
                     <div id="conversation"></div>
-                    <form ng-submit="ctrl.sendMessage()">
-                        <input type="text" ng-model="ctrl.message" name="message" placeholder="Send message" required="true">
+                    <form ng-submit="sendMessage()">
+                        <input type="text" ng-model="message" name="message" placeholder="Send message" required="true">
                         <input type="file" id="fileToAll">
                     </form>
                 </div>

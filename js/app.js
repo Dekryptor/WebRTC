@@ -88,7 +88,7 @@ var RoomController = (function () {
         this.$routeParams = $routeParams;
         this.$location = $location;
         this.ngNoti = ngNoti;
-        this.room = $routeParams.roomName;
+        $scope.room = $routeParams.roomName;
         var webrtc = new SimpleWebRTC({
             localVideoEl: 'localVideo',
             remoteVideosEl: '',
@@ -98,8 +98,8 @@ var RoomController = (function () {
             autoAdjustMic: false
         });
         webrtc.on('readyToCall', function () {
-            if (this.room) {
-                webrtc.joinRoom(this.room);
+            if ($scope.room) {
+                webrtc.joinRoom($scope.room);
             }
         });
         webrtc.on('localStream', function (stream) {
@@ -143,8 +143,8 @@ var RoomController = (function () {
                             case 'connected':
                             case 'completed':
                                 connstate_1.innerText = 'Connection established.';
-                                if (this.nick != "Input your username") {
-                                    webrtc.sendDirectlyToAll(this.room, 'nick', this.nick);
+                                if ($scope.nick != "Input your username") {
+                                    webrtc.sendDirectlyToAll($scope.room, 'nick', $scope.nick);
                                 }
                                 break;
                             case 'disconnected':
@@ -186,10 +186,10 @@ var RoomController = (function () {
                 connstate.innerText = 'Connection failed.';
             }
         });
-        this.url = $location.$$absUrl;
+        $scope.url = $location.$$absUrl;
         $scope.sendMessage = function () {
             var id = $(".mes.active").attr("id");
-            webrtc.sendDirectlyToAll(this.room, 'chat', this.message);
+            webrtc.sendDirectlyToAll($scope.room, 'chat', $scope.message);
             if (id != "me") {
                 $(".mes.active").removeClass("active");
                 $('#conversation').append("<div id='me' class='mes me active'>" +
@@ -197,26 +197,26 @@ var RoomController = (function () {
                     "<p class='content'></p>" +
                     "</div>");
             }
-            $(".mes.active .content").append(this.message + "<br>");
-            this.message = "";
+            $(".mes.active .content").append($scope.message + "<br>");
+            $scope.message = "";
         };
-        this.nick = "Input your username";
-        this.editing = false;
+        $scope.nick = "Input your username";
+        $scope.editing = false;
         $scope.doneEditing = function () {
-            this.editing = false;
-            if (this.nick != "Input your username" && this.nick != "") {
-                webrtc.sendDirectlyToAll(this.room, 'nick', this.nick);
+            $scope.editing = false;
+            if ($scope.nick != "Input your username" && $scope.nick != "") {
+                webrtc.sendDirectlyToAll($scope.room, 'nick', $scope.nick);
             }
-            else if (this.nick == "") {
-                this.nick = "Input your username";
+            else if ($scope.nick == "") {
+                $scope.nick = "Input your username";
             }
         };
         $scope.setNick = function () {
-            webrtc.sendDirectlyToAll(this.room, 'nick', this.nick);
+            webrtc.sendDirectlyToAll($scope.room, 'nick', $scope.nick);
         };
         $scope.editItem = function () {
-            this.editing = true;
-            this.nick = "";
+            $scope.editing = true;
+            $scope.nick = "";
         };
         webrtc.on('channelMessage', function (peer, label, data) {
             if (data.type === 'chat') {
