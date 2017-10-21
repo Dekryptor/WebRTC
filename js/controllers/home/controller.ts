@@ -1,11 +1,14 @@
 class HomeController {
-  static $inject = ["$scope","$location"];
+  static $inject = ["$location"];
 
   public hostName: string;
   public roomName: string;
 
-  constructor(private $scope:any, private $location:any) {
-    this.hostName = this.$location.absUrl();
+  constructor(private $location:any) {}
+
+  ngOnInit() {
+    let self = this;
+    self.hostName = this.$location.absUrl();
   }
 
   public createRoom():void {

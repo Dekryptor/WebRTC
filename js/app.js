@@ -18,7 +18,7 @@ var Copy = (function () {
             alert('Copying command was ' + msg);
         }
         catch (err) {
-            alert("Copy to clipboard: Ctrl+C, Enter", toCopy);
+            alert("Copy to clipboard: Ctrl+C, Enter");
         }
         textarea.remove();
     };
@@ -70,15 +70,17 @@ var ClickCopy = (function () {
     return ClickCopy;
 }());
 var HomeController = (function () {
-    function HomeController($scope, $location) {
-        this.$scope = $scope;
+    function HomeController($location) {
         this.$location = $location;
-        this.hostName = this.$location.absUrl();
     }
+    HomeController.prototype.ngOnInit = function () {
+        var self = this;
+        self.hostName = this.$location.absUrl();
+    };
     HomeController.prototype.createRoom = function () {
         this.$location.path("/" + this.roomName);
     };
-    HomeController.$inject = ["$scope", "$location"];
+    HomeController.$inject = ["$location"];
     return HomeController;
 }());
 var RoomController = (function () {
